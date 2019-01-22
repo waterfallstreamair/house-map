@@ -27,7 +27,7 @@ const Img = ({ source, children }) => {
 
 Img.propTypes = {
   source: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
-  children: PropTypes.array.isRequired,
+  children: PropTypes.object,
 };
 
 const Children = styled.div`
@@ -40,8 +40,8 @@ const Image = ({ value, children }) => (
 );
 
 Image.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
-  children: PropTypes.array.isRequired,
+  value: PropTypes.string.isRequired,
+  children: PropTypes.object,
 };
 
 const Address = ({ value }) => <AddessWrapper>{value || ''}</AddessWrapper>;
@@ -63,7 +63,7 @@ const Area = ({ value }) => (
 );
 
 Area.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]).isRequired,
+  value: PropTypes.number,
 };
 
 const ByName = ({ name, value, children }) => (
@@ -80,14 +80,13 @@ const ByName = ({ name, value, children }) => (
 );
 
 ByName.propTypes = {
-  name: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
+  name: PropTypes.string,
   value: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.string,
     PropTypes.array,
-    PropTypes.bool,
-  ]).isRequired,
-  children: PropTypes.array.isRequired,
+  ]),
+  children: PropTypes.object,
 };
 
 const ChildrenList = ({ template, property }) => (
@@ -136,7 +135,9 @@ const Properties = ({ template, properties }) => (
       <ItemWrapper key={`property-${e.id}`}>
         <Item>
           <Title>{`ID ${e.id}`}</Title>
-          <OrderedList template={template && template.template} property={e} />
+          {template && (
+            <OrderedList template={template.template} property={e} />
+          )}
         </Item>
       </ItemWrapper>
     ))}
@@ -144,7 +145,7 @@ const Properties = ({ template, properties }) => (
 );
 
 Properties.propTypes = {
-  template: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]).isRequired,
+  template: PropTypes.object,
   properties: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]).isRequired,
 };
 

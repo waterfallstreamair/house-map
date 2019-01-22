@@ -36,7 +36,7 @@ export class HomePage extends React.Component {
 
   render() {
     const { templates, properties, template, filtered } = this.props;
-    const selected = template || (templates && templates[0]) || false;
+    const selected = template || (templates && templates[0]) || null;
     return (
       <article>
         <Helmet>
