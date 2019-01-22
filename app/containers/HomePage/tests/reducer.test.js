@@ -2,7 +2,7 @@ import { fromJS } from 'immutable';
 
 import homeReducer from '../reducer';
 // import * as actions from '../actions';
-import * as constants from '../constants';
+// import * as constants from '../constants';
 
 describe('homeReducer', () => {
   let state;
@@ -21,5 +21,4 @@ describe('homeReducer', () => {
     const expectedResult = state;
     expect(homeReducer(undefined, {})).toEqual(expectedResult);
   });
-
 });

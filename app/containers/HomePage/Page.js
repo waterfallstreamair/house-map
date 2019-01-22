@@ -11,33 +11,32 @@ import Column from '../../components/Column';
 import H3 from '../../components/H3';
 import Content from '../../components/Content';
 import Search from '../../components/Search';
-//import Head from '../../components/Head';
+// import Head from '../../components/Head';
 import Templates from './Templates';
 import Properties from './Properties';
 
 export class HomePage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
+    this.state = {};
   }
 
   componentDidMount() {
     this.props.getTemplatesRequest();
-   // this.props.getPropertiesRequest();
+    this.props.getPropertiesRequest();
   }
 
   setFilter = ({ event, properties }) => {
-    this.props.setFilter({ properties, filter: event.target.value })
+    this.props.setFilter({ properties, filter: event.target.value });
   };
-  
+
   setTemplate = ({ template }) => {
-    this.props.setTemplate({ template })
-  }
-  
+    this.props.setTemplate({ template });
+  };
+
   render() {
     const { templates, properties, template, filtered } = this.props;
-    const selected = template || (templates && templates[0]) || false
+    const selected = template || (templates && templates[0]) || false;
     return (
       <article>
         <Helmet>
@@ -53,13 +52,12 @@ export class HomePage extends React.Component {
             />
             <Templates templates={templates} onClick={this.setTemplate} />
           </Column>
-          {     
-            properties && (
-              <Properties 
-                template={selected} 
-                properties={filtered || properties} />
-            )
-          }
+          {properties && (
+            <Properties
+              template={selected}
+              properties={filtered || properties}
+            />
+          )}
         </Content>
       </article>
     );
@@ -71,6 +69,7 @@ HomePage.propTypes = {
   properties: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]).isRequired,
   getTemplatesRequest: PropTypes.func.isRequired,
   getPropertiesRequest: PropTypes.func.isRequired,
+  setTemplate: PropTypes.func.isRequired,
   setFilter: PropTypes.func.isRequired,
   template: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]).isRequired,
   filtered: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]).isRequired,

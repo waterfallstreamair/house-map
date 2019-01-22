@@ -1,6 +1,5 @@
 export const CONST_URL_TEMPLATES = 'http://demo4452328.mockable.io/templates';
-export const CONST_URL_PROPERTIES =
-  'http://demo4452328.mockable.io/properties';
+export const CONST_URL_PROPERTIES = 'http://demo4452328.mockable.io/properties';
 
 export const TYPE_TEMPLATES_REQUEST = 'TYPE_POSTS_REQUEST';
 export const TYPE_TEMPLATES_SUCCESS = 'TYPE_POSTS_SUCCESS';

@@ -1,19 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import styled from 'styled-components';
 import Item from '../../components/Item';
 import Title from '../../components/Title';
-import Text from '../../components/Text';
-import List from '../../components/List';
-import { 
-  Wrapper, 
-  ItemWrapper, 
+// import Text from '../../components/Text';
+// import List from '../../components/List';
+import {
+  Wrapper,
+  ItemWrapper,
   PriceWrapper,
-  AreaWrapper, 
+  AreaWrapper,
   AddessWrapper,
 } from './Wrappers';
-
-import styled from 'styled-components';
 
 const Img = ({ source, children }) => {
   const Styled = styled.div`
@@ -23,73 +22,129 @@ const Img = ({ source, children }) => {
     width: 100%;
     height: 10em;
   `;
-  return <Styled>{children}</Styled>
-}
+  return <Styled>{children}</Styled>;
+};
+
+Img.propTypes = {
+  source: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
+  children: PropTypes.array.isRequired,
+};
 
 const Children = styled.div`
   padding-left: 1em;
   padding-top: 1em;
 `;
-  
-const Image = ({ value, children }) =>
-  <Img source={value || ''} >{children}</Img>
-  
-const Address = ({ value }) => 
-  <AddessWrapper>{value || ''}</AddessWrapper>
-  
-const Price = ({ value }) => 
+
+const Image = ({ value, children }) => (
+  <Img source={value || ''}>{children}</Img>
+);
+
+Image.propTypes = {
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
+  children: PropTypes.array.isRequired,
+};
+
+const Address = ({ value }) => <AddessWrapper>{value || ''}</AddessWrapper>;
+
+Address.propTypes = {
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
+};
+
+const Price = ({ value }) => (
   <PriceWrapper>{value ? `$${value}` : ''}</PriceWrapper>
-  
-const Area = ({ value }) =>
+);
+
+Price.propTypes = {
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]).isRequired,
+};
+
+const Area = ({ value }) => (
   <AreaWrapper>{value ? `${value} sq.ft.` : ''}</AreaWrapper>
+);
+
+Area.propTypes = {
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]).isRequired,
+};
 
 const ByName = ({ name, value, children }) => (
-    <div>
-      {name === 'IMAGE' && 
-        <Image value={value && value[0]} >
-          {children && <Children>{children}</Children>}
-        </Image>
-      }
-      {name === 'ADDRESS' && <Address value={value} />}
-      {name === 'PRICE' && <Price value={value} />}
-      {name === 'AREA' && <Area value={value} />}
-    </div>
-)
+  <div>
+    {name === 'IMAGE' && (
+      <Image value={value && value[0]}>
+        {children && <Children>{children}</Children>}
+      </Image>
+    )}
+    {name === 'ADDRESS' && <Address value={value} />}
+    {name === 'PRICE' && <Price value={value} />}
+    {name === 'AREA' && <Area value={value} />}
+  </div>
+);
+
+ByName.propTypes = {
+  name: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+    PropTypes.array,
+    PropTypes.bool,
+  ]).isRequired,
+  children: PropTypes.array.isRequired,
+};
 
 const ChildrenList = ({ template, property }) => (
-    <div>
-      {template.map((e, i) => 
-        <ByName key={`sub-byname-${i}`} name={e.component} value={property[e.field]} />
-      )}
-    </div>
+  <div>
+    {template.map(e => (
+      <ByName
+        key={`sub-byname-${e.component}`}
+        name={e.component}
+        value={property[e.field]}
+      />
+    ))}
+  </div>
 );
 
+ChildrenList.propTypes = {
+  template: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]).isRequired,
+  property: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]).isRequired,
+};
+
 const OrderedList = ({ template, property }) => (
-    <div>
-      {template && template.length && template.map((e, i) => 
-        <ByName key={`byname-${i}`} name={e.component} value={property[e.field]} >
-          {e.children && 
-            <ChildrenList template={e.children} property={property} />}
+  <div>
+    {template &&
+      template.length &&
+      template.map(e => (
+        <ByName
+          key={`byname-${e.component}`}
+          name={e.component}
+          value={property[e.field]}
+        >
+          {e.children && (
+            <ChildrenList template={e.children} property={property} />
+          )}
         </ByName>
-      )}
-    </div>
+      ))}
+  </div>
 );
+
+OrderedList.propTypes = {
+  template: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]).isRequired,
+  property: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]).isRequired,
+};
 
 const Properties = ({ template, properties }) => (
   <Wrapper>
     {properties.map(e => (
-    <ItemWrapper key={`property-${e.id}`}>
-      <Item>
-        <Title>{`ID ${e.id}`}</Title>
-        <OrderedList template={template && template.template} property={e} />
-      </Item>
-    </ItemWrapper>
+      <ItemWrapper key={`property-${e.id}`}>
+        <Item>
+          <Title>{`ID ${e.id}`}</Title>
+          <OrderedList template={template && template.template} property={e} />
+        </Item>
+      </ItemWrapper>
     ))}
   </Wrapper>
 );
 
 Properties.propTypes = {
-  template: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]).isRequired,
+  template: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]).isRequired,
   properties: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]).isRequired,
 };
 

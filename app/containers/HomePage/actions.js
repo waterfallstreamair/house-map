@@ -12,11 +12,9 @@ export const getTemplates = options => {
   };
 };
 
-export const getPropertiesRequest = () => {
-  return {
-    type: constants.TYPE_PROPERTIES_REQUEST,
-  };
-};
+export const getPropertiesRequest = () => ({
+  type: constants.TYPE_PROPERTIES_REQUEST,
+});
 
 export const getProperties = options => {
   const { properties } = options;
@@ -35,10 +33,10 @@ export const setTemplate = options => {
 };
 
 export const setFilter = ({ properties, filter }) => {
-  const filterLower = filter.toLowerCase()
-  const filtered = properties.filter(e => 
-    e.full_address.toLowerCase().includes(filterLower)
-  )
+  const filterLower = filter.toLowerCase();
+  const filtered = properties.filter(e =>
+    e.full_address.toLowerCase().includes(filterLower),
+  );
   return {
     type: constants.TYPE_FILTER_SET,
     properties: filtered,

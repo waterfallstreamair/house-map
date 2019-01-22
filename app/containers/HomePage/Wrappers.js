@@ -29,7 +29,7 @@ export const PriceWrapper = styled.div`
 
 export const AreaWrapper = styled.div`
   color: #999999;
-  font-size: 0.75em
+  font-size: 0.75em;
 `;
 
 export const AddessWrapper = styled.div`

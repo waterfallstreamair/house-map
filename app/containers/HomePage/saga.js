@@ -9,7 +9,6 @@ export function* getTemplates() {
     const templates = yield call(request, url);
     yield put(actions.getTemplates({ templates }));
   } catch (e) {
-    console.log({ e })
     // yield put(actions.show({ e }));
   }
 }
@@ -20,7 +19,6 @@ export function* getProperties() {
     const properties = yield call(request, url);
     yield put(actions.getProperties({ properties }));
   } catch (e) {
-    console.log({ e })
     // yield put(actions.show({ e }));
   }
 }
